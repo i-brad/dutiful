@@ -1,5 +1,5 @@
 import { useResetPassword } from "@api/authentication";
-import { passwordResetState } from "@atoms/passwordResetState";
+import { verifyOtpState } from "@atoms/verifyOtpState";
 import { PrimaryButton } from "@components/common/Buttons";
 import { InputField } from "@components/common/Input";
 import AppLayout from "@layouts/AppLayout";
@@ -12,7 +12,7 @@ import { resetPassword } from "types/authentication";
 import * as Yup from "yup";
 
 function ResetPassword() {
-  const { email, otp } = useRecoilValue(passwordResetState);
+  const { email, otp } = useRecoilValue(verifyOtpState);
   const resetPasswordValidationSchema = Yup.object().shape({
     newPassword: Yup.string().required("Field is Required"),
     confirmPassword: Yup.string()

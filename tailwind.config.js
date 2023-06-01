@@ -18,6 +18,11 @@ module.exports = {
         medium_purple: "#A16AE8",
         crayola: "#A3B1BF",
         platinum: "#E5E7EA",
+        charcoal: "#353F54",
+        dark_purple: "#230B34",
+        alice_blue: "#EEEEFF",
+        pastel_blue: "#B1BDCA",
+        magnolia: "#F8F3FF",
       },
       fontSize: {
         t14: ["0.78rem", "1.11rem"],

@@ -1,7 +1,8 @@
 import { ErrorMessage, Field } from "formik";
 import React, { useState } from "react";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
-import { FiCheckSquare } from "react-icons/fi";
+import { BsCheckSquareFill } from "react-icons/bs";
+import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 
 interface InputFieldProps {
   name: string;
@@ -75,34 +76,28 @@ export function InputField({
 
 interface CheckBoxProps {
   name: string;
-  label: string;
-  handleCheck: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleCheck: () => void;
   checked: boolean;
 }
 
-export function CheckBox({ name, label, handleCheck, checked }: CheckBoxProps) {
+export function CheckBox({ name, handleCheck, checked }: CheckBoxProps) {
   return (
-    <Field
-      as="label"
-      className="flex items-center cursor-pointer space-x-[0.50rem]"
-    >
-      <span className="relative inline-block w-4 h-4">
-        <Field
-          name={name}
-          type="checkbox"
-          onChange={handleCheck}
-          className="absolute top-0 left-0 z-10 w-full h-full opacity-0 cursor-pointer"
-          role="checkbox"
-          aria-checked="false"
-          aria-labelledby="Remember me"
-        ></Field>
-        <FiCheckSquare
-          className={`w-full h-full cursor-pointer ${
-            checked ? "text-[#16A34A]" : ""
-          }`}
-        />
-      </span>
-      <span>{label}</span>
-    </Field>
+    <span className="relative inline-block w-4 h-4">
+      <Field
+        name={name}
+        type="checkbox"
+        onChange={handleCheck}
+        checked={checked}
+        className="absolute top-0 left-0 z-10 w-full h-full opacity-0 cursor-pointer"
+        role="checkbox"
+        aria-checked="false"
+        aria-labelledby="Remember me"
+      ></Field>
+      {checked ? (
+        <BsCheckSquareFill className="w-full h-full cursor-pointer text-medium_purple" />
+      ) : (
+        <MdOutlineCheckBoxOutlineBlank className="w-full h-full cursor-pointer text-medium_purple" />
+      )}
+    </span>
   );
 }

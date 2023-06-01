@@ -1,17 +1,23 @@
 import { configOptions, instance } from '@api/httpConfig';
 import BACKEND_URLS from '@api/urls';
+import { AuthState } from '@atoms/authenticationState';
 import { userState } from '@atoms/userState';
+import { verifyOtpState } from '@atoms/verifyOtpState';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import config from '@utils/config';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { toast } from "react-hot-toast";
 import { useSetRecoilState } from 'recoil';
-import { LoginDetails, forgotPassword, resetPassword } from 'types/authentication';
+import { LoginDetails, SignupDetails, forgotPassword, resetPassword } from 'types/authentication';
 import { IError } from 'types/index';
 
-export const useLogin = () =>
-    useMutation(
+export const useLogin = () => {
+    const setUser = useSetRecoilState(userState)
+    const setAuth = useSetRecoilState(AuthState)
+    const setVerifyOtpState = useSetRecoilState(verifyOtpState)
+    const router = useRouter()
+    return useMutation(
         (values: LoginDetails) => {
             return instance
                 .post(BACKEND_URLS.auth.login, values)
@@ -22,24 +28,31 @@ export const useLogin = () =>
         },
         {
             onSuccess: (data) => {
-                // Cookies.set(config.key.token, data.access_token);
-                // Cookies.set(config.key.refreshToken, data.refresh_token);
-                console.log(data)
+                // console.log(data)
+                Cookies.set(config.key.token, data.data.token);
+                setUser(data.user)
                 toast.success(data.message);
+                setAuth({ isLoggedIn: true })
+
+                if (data.data.user.email_verified) {
+                    router.push("/")
+                    return
+                }
+                setVerifyOtpState({ type: "email", email: data.data.user.email })
+                toast.success("Verify your email");
+                router.push("/auth/verify")
             },
             onError: (err: IError) => {
                 toast.error(err.message);
             },
         },
     );
+}
 
 // for signup
-type SignupDetails = {
-    username: string;
-    password: string;
-};
-
 export const useSignup = () => {
+    const setUser = useSetRecoilState(userState)
+    const router = useRouter()
     return useMutation((values: SignupDetails) => {
         return instance
             .post(BACKEND_URLS.auth.register, values)
@@ -47,21 +60,127 @@ export const useSignup = () => {
             .catch((err) => {
                 throw err.response.data;
             });
+    }, {
+        onSuccess: (data) => {
+            // console.log(data)
+            Cookies.set(config.key.token, data.token);
+            setUser(data.user)
+            toast.success(data.message);
+            toast.success("You can now log in");
+            router.push("/auth/login")
+        },
+        onError: (err: IError) => {
+            // console.log(err)
+            if (err.errors) {
+                Object.entries(err.errors).map(([key, value]) => {
+                    toast.error(value[0]);
+                })
+                return
+            }
+            toast.error(err.message);
+        },
     });
 };
 
-type ResendEmail = {
+type ResendOtp = {
     email: string;
 };
-export const useResendMail = () => {
-    return useMutation((values: ResendEmail) => {
+export const useResendOtp = () => {
+    return useMutation((values: ResendOtp) => {
         return instance
-            .post(BACKEND_URLS.auth.resendToken, values)
+            .post(BACKEND_URLS.auth.resendOtp, values, configOptions())
             .then((res) => res.data)
             .catch((err) => {
                 throw err.response.data;
             });
-    });
+    },
+        {
+            onSuccess: (data) => {
+                toast.success(data.message);
+            },
+            onError: (err: IError) => {
+                console.log(err)
+                if (err.error) {
+                    toast.error(err.error);
+                    return;
+                }
+                if (err.errors) {
+                    Object.entries(err.errors).map(([key, value]) => {
+                        toast.error(value[0]);
+                    })
+                    return
+                }
+                toast.error(err.message);
+            },
+        });
+};
+
+type emailVerifyOtp = {
+    otp: string;
+};
+export const useEmailVerify = () => {
+    return useMutation((values: emailVerifyOtp) => {
+        return instance
+            .post(BACKEND_URLS.auth.verifyEmail, values, configOptions())
+            .then((res) => res.data)
+            .catch((err) => {
+                throw err.response.data;
+            });
+    },
+        {
+            onSuccess: (data) => {
+                toast.success(data.message);
+            },
+            onError: (err: IError) => {
+                // console.log(err)
+                if (err.error) {
+                    toast.error(err.error);
+                    return;
+                }
+                if (err.errors) {
+                    Object.entries(err.errors).map(([key, value]) => {
+                        toast.error(value[0]);
+                    })
+                    return
+                }
+                toast.error(err.message);
+            },
+        });
+};
+
+type passwordVerifyOtp = {
+    email: string;
+    otp: string;
+};
+export const usePasswordResetVerifyOtp = () => {
+    return useMutation((values: passwordVerifyOtp) => {
+        return instance
+            .post(BACKEND_URLS.auth.verifyPasswordResetOtp, values, configOptions())
+            .then((res) => res.data)
+            .catch((err) => {
+                throw err.response.data;
+            });
+    },
+        {
+            onSuccess: (data) => {
+                console.log(data)
+                toast.success(data.message);
+            },
+            onError: (err: IError) => {
+                // console.log(err)
+                if (err.error) {
+                    toast.error(err.error);
+                    return;
+                }
+                if (err.errors) {
+                    Object.entries(err.errors).map(([key, value]) => {
+                        toast.error(value[0]);
+                    })
+                    return
+                }
+                toast.error(err.message);
+            },
+        });
 };
 
 // useForgotPassword
@@ -86,6 +205,7 @@ export const useResetPassword = () => {
 
 // useForgotPassword
 export const useForgotPassword = () => {
+
     return useMutation((values: forgotPassword) => {
         return instance
             .post(BACKEND_URLS.auth.forgotPassword, values)
@@ -95,10 +215,12 @@ export const useForgotPassword = () => {
             });
     }, {
         onSuccess: (data) => {
-            console.log(data)
+            // console.log(data)
             toast.success(data.message);
+
         },
         onError: (err: IError) => {
+            console.log(err)
             toast.error(err.message);
         },
     },);
@@ -135,55 +257,4 @@ export const useGetUser = () => {
             },
         },
     );
-};
-
-export const useGetRefreshToken = (execute: boolean) => {
-    const token = Cookies.get(config.key.refreshToken);
-
-    return useQuery(
-        ['getRefreshToken'],
-        () =>
-            instance
-                .get(`${BACKEND_URLS.auth.refreshToken}?token=${token}`)
-                .then((res) => res.data)
-                .catch((err) => {
-                    throw err.response.data;
-                }),
-        {
-            retry: false,
-            enabled: execute,
-        },
-    );
-};
-
-type ChangePassword = {
-    old_password: string;
-    new_password: string;
-};
-
-export const useChangePassword = () => {
-    return useMutation(
-        (values: ChangePassword) =>
-            instance
-                .patch(BACKEND_URLS.auth.newPassword, values, configOptions())
-                .then((res) => res.data)
-                .catch((err) => {
-                    throw err.response.data;
-                }),
-        {
-            onSuccess: (data) => {
-                toast.success(data.message);
-            },
-            onError: (err: IError) => {
-
-                toast.error(err.message);
-            },
-        },
-    );
-};
-
-export const logOutUserReq = () => {
-    Cookies.remove(config.key.token);
-    Cookies.remove(config.key.refreshToken);
-    localStorage.clear();
 };

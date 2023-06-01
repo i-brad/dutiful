@@ -5,7 +5,7 @@ import React from "react";
 function Navbar() {
   const links = ["business directory", "features", "pricing", "blog"];
   return (
-    <nav className="pl-[3.58rem] pr-[2.79rem] pt-[0.89rem] flex justify-between items-center">
+    <nav className="pl-[3.58rem] pr-[2.79rem] sticky top-0 bg-white z-10 pt-[0.89rem] flex justify-between items-center">
       <Link href="/">
         <Image
           src="/dutiful.svg"

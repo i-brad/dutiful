@@ -1,11 +1,8 @@
 export interface IError {
     message: string;
+    error: string;
     status: boolean;
     errors: {
-        [x: string]: error
-    }
-}
-
-interface error {
-    [x: string]: string[]
+        [x: string]: string[]
+    } | string | null
 }
