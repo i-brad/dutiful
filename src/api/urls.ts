@@ -3,12 +3,12 @@ const BACKEND_URLS = {
     auth: {
         register: '/auth/register/',
         login: '/auth/login/',
-        resendOtp: '/auth/email/resend',
-        me: '/auth/me/',
-        forgotPassword: "/auth/password/email",
-        resetPassword: '/auth/password/reset',
-        verifyEmail: "/auth/email/verify",
-        verifyPasswordResetOtp: "/auth/password/verify"
+        resendOtp: '/auth/email/resend/',
+        me: '/auth/user/',
+        forgotPassword: "/auth/password/email/",
+        resetPassword: '/auth/password/reset/',
+        verifyEmail: "/auth/email/verify/",
+        verifyPasswordResetOtp: "/auth/password/verify/"
     },
 };
 

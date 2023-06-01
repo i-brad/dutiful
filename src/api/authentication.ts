@@ -155,7 +155,7 @@ type passwordVerifyOtp = {
 export const usePasswordResetVerifyOtp = () => {
     return useMutation((values: passwordVerifyOtp) => {
         return instance
-            .post(BACKEND_URLS.auth.verifyPasswordResetOtp, values, configOptions())
+            .post(BACKEND_URLS.auth.verifyPasswordResetOtp, values)
             .then((res) => res.data)
             .catch((err) => {
                 throw err.response.data;
@@ -185,6 +185,7 @@ export const usePasswordResetVerifyOtp = () => {
 
 // useForgotPassword
 export const useResetPassword = () => {
+    const router = useRouter()
     return useMutation((values: resetPassword) => {
         return instance
             .post(BACKEND_URLS.auth.resetPassword, values)
@@ -196,8 +197,13 @@ export const useResetPassword = () => {
         onSuccess: (data) => {
             console.log(data)
             toast.success(data.message);
+            router.push("/auth/login")
         },
         onError: (err: IError) => {
+            if (err.error) {
+                toast.error(err.error);
+                return;
+            }
             toast.error(err.message);
         },
     });

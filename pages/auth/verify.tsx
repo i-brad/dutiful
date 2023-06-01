@@ -10,12 +10,12 @@ import AppLayout from "@layouts/AppLayout";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import OtpInput from "react-otp-input";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 function Verify() {
   const router = useRouter();
   const [userEmail, setUserEmail] = useState();
-  const { email, type } = useRecoilValue(verifyOtpState);
+  const [{ email, type }, setVerifyOtpState] = useRecoilState(verifyOtpState);
   const { isLoggedIn } = useRecoilValue(AuthState);
   const [otp, setOtp] = useState("");
 
@@ -29,8 +29,19 @@ function Verify() {
 
   const { isLoading: resending, mutate: resendOtp } = useResendOtp();
   const { isLoading, mutate: verify } = useEmailVerify();
-  const { isLoading: resetVerifying, mutate: passwordResetVerify } =
-    usePasswordResetVerifyOtp();
+  const {
+    isLoading: resetVerifying,
+    mutate: passwordResetVerify,
+    isSuccess,
+  } = usePasswordResetVerifyOtp();
+
+  useEffect(() => {
+    if (isSuccess && type === "password") {
+      setVerifyOtpState({ type, email, otp });
+      router.push("/auth/reset-password");
+      return;
+    }
+  }, [email, isSuccess, router, type, setVerifyOtpState, otp]);
 
   const handleVerification = () => {
     if (type === "password") {
