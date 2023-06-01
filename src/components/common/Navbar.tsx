@@ -16,8 +16,8 @@ function Navbar() {
         <Image
           src="/dutiful.svg"
           alt="Dutiful Logo"
-          width={107}
-          height={48}
+          width={100}
+          height={45}
           priority
         />
       </Link>
@@ -36,7 +36,7 @@ function Navbar() {
         </ul>
         {isLoggedIn ? (
           <button
-            className="text-accent border-2 min-w-[9.67rem] grid place-items-center rounded-md py-[0.90rem] px-[2.89rem] border-accent font-CircularStd font-medium text-t20"
+            className="text-accent border-2 min-w-[9.67rem] grid place-items-center rounded-md py-[0.85rem] px-[2.5rem] border-accent font-CircularStd font-medium text-t20"
             type="button"
             disabled={isLoading}
             onClick={() => mutate()}
@@ -57,7 +57,7 @@ function Navbar() {
             </Link>
             <Link
               href="/auth/signup"
-              className="text-accent border-2 rounded-md py-[0.90rem] px-[2.89rem] border-accent font-CircularStd font-medium text-t20"
+              className="text-accent border-2 rounded-md py-[0.85rem] px-[2.5rem] border-accent font-CircularStd font-medium text-t20"
             >
               Sign up
             </Link>

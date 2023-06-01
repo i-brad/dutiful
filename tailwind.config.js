@@ -23,6 +23,8 @@ module.exports = {
         alice_blue: "#EEEEFF",
         pastel_blue: "#B1BDCA",
         magnolia: "#F8F3FF",
+        onyx: "#383838",
+        baby_powder: "#FCFAFF",
       },
       fontSize: {
         t14: ["0.78rem", "1.11rem"],
