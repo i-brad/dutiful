@@ -20,7 +20,7 @@ function Navbar() {
           {links.map((link) => (
             <li key={link}>
               <Link
-                className="text-t18 font-medium-extra text-dim_gray font-CircularStd"
+                className="text-t18 font-medium-slim text-dim_gray font-CircularStd"
                 href={link.replace(/" "/g, "-")}
               >
                 {link}
@@ -37,7 +37,7 @@ function Navbar() {
           </Link>
           <Link
             href="/auth/signup"
-            className="text-primary border-2 rounded-md py-[0.90rem] px-[2.89rem] border-primary font-CircularStd font-medium text-t20"
+            className="text-accent border-2 rounded-md py-[0.90rem] px-[2.89rem] border-accent font-CircularStd font-medium text-t20"
           >
             Sign up
           </Link>

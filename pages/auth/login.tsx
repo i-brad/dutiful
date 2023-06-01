@@ -1,7 +1,7 @@
 import { useLogin } from "@api/authentication";
 import { PrimaryButton } from "@components/common/Buttons";
 import { InputField } from "@components/common/Input";
-import AuthLayout from "@layouts/AuthLayout";
+import AppLayout from "@layouts/AppLayout";
 import { Form, Formik } from "formik";
 import Link from "next/link";
 import React from "react";
@@ -20,10 +20,10 @@ function Login() {
   const { isLoading, mutate } = useLogin();
 
   return (
-    <AuthLayout>
+    <AppLayout>
       <section className="w-full pt-[4.83rem]">
         <div className="w-full max-w-[27rem] mx-auto">
-          <p className="text-t16 font-medium-extra font-CircularStd text-dim_gray">
+          <p className="text-t16 font-medium-slim font-CircularStd text-dim_gray">
             Jump right back in
           </p>
           <h1 className="font-semibold text-t36 text-space_cadet font-Recoleta mb-[2.28rem]">
@@ -73,7 +73,7 @@ function Login() {
                 />
                 <Link
                   href="/auth/forgot-password"
-                  className="text-t14 text-medium_purple font-medium-extra tracking-[-0.01rem] block mr-0 ml-auto w-fit mb-[2.44rem]"
+                  className="text-t14 text-medium_purple font-medium-slim tracking-[-0.01rem] block mr-0 ml-auto w-fit mb-[2.44rem]"
                 >
                   Forgot password?
                 </Link>
@@ -88,15 +88,15 @@ function Login() {
               </Form>
             )}
           </Formik>
-          <span className="block mx-auto w-fit text-t16 font-medium-extra tracking-[-0.005em] text-crayola mt-[1.33rem]">
+          <span className="block mx-auto w-fit text-t16 font-medium-slim tracking-[-0.005em] text-crayola mt-[1.33rem]">
             Don&apos;t have an account?{" "}
-            <Link href="/auth/sign-up" className="text-primary">
+            <Link href="/auth/sign-up" className="font-medium text-accent">
               Sign Up
             </Link>
           </span>
         </div>
       </section>
-    </AuthLayout>
+    </AppLayout>
   );
 }
 

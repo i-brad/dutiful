@@ -15,7 +15,7 @@ function SocialLinks({ heading, socials }: SocialLinksProps) {
             <a
               href={link}
               target="_blank"
-              className="text-t16 block font-medium-extra text-maximum_blue_purple font-CircularStd"
+              className="text-t16 block font-medium-slim text-maximum_blue_purple font-CircularStd"
               rel="noopener noreferrer"
             >
               {icon}

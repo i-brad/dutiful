@@ -65,14 +65,14 @@ function Footer() {
       </div>
       <Divider />
       <div className="flex items-center space-x-[5.67rem] mt-[0.78rem]">
-        <p className="text-white font-medium-extra text-t18 font-CircularStd">
+        <p className="text-white font-medium-slim text-t18 font-CircularStd">
           &copy; 2022 Dutiful&#174;
         </p>
         <ul className="flex items-center space-x-[1.78rem]">
           {["terms of service", "privacy policy", "disclaimer"].map((link) => (
             <li key={link} className="first-letter:capitalize">
               <Link
-                className="text-t16 font-medium-extra text-maximum_blue_purple font-CircularStd"
+                className="text-t16 font-medium-slim text-maximum_blue_purple font-CircularStd"
                 href={link.replace(" ", "-")}
               >
                 {link}

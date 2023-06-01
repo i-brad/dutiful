@@ -21,6 +21,7 @@
       "@api/*": ["src/api/*"],
       "@styles/*": ["styles/*"],
       "@atoms/*": ["src/atoms/*"],
+      "@assets/*": ["src/assets/*"],
       "@utils/*": ["src/utils/*"],
       "types/*": ["src/types/*"]
     }
