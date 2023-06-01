@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { toast } from "react-hot-toast";
 import { useSetRecoilState } from 'recoil';
-import { ForgotPassword, LoginDetails } from 'types/authentication';
+import { LoginDetails, forgotPassword, resetPassword } from 'types/authentication';
 import { IError } from 'types/index';
 
 export const useLogin = () =>
@@ -65,23 +65,28 @@ export const useResendMail = () => {
 };
 
 // useForgotPassword
-type ResetPassword = {
-    email: string;
-};
 export const useResetPassword = () => {
-    return useMutation((values: ResetPassword) => {
+    return useMutation((values: resetPassword) => {
         return instance
-            .post(`/auth/password-reset/`, values)
+            .post(BACKEND_URLS.auth.resetPassword, values)
             .then((res) => res.data)
             .catch((err) => {
                 throw err.response.data;
             });
+    }, {
+        onSuccess: (data) => {
+            console.log(data)
+            toast.success(data.message);
+        },
+        onError: (err: IError) => {
+            toast.error(err.message);
+        },
     });
 };
 
 // useForgotPassword
 export const useForgotPassword = () => {
-    return useMutation((values: ForgotPassword) => {
+    return useMutation((values: forgotPassword) => {
         return instance
             .post(BACKEND_URLS.auth.forgotPassword, values)
             .then((res) => res.data)

@@ -7,7 +7,7 @@ const BACKEND_URLS = {
         refreshToken: '/auth/refresh/',
         me: '/auth/me/',
         forgotPassword: "/auth/password/email",
-        resetPassword: '/auth/password-reset/',
+        resetPassword: '/auth/password/reset',
         newPassword: '/auth/user/password-change/',
     },
 };

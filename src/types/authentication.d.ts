@@ -3,6 +3,12 @@ export type LoginDetails = {
     password: string;
 };
 
-export type ForgotPassword = {
+export type forgotPassword = {
     email: string;
+};
+
+export type resetPassword = {
+    otp: string,
+    email: string;
+    password: string
 };

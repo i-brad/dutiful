@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { BsArrowLeft } from "react-icons/bs";
-import { ForgotPassword } from "types/authentication";
+import { forgotPassword } from "types/authentication";
 import * as Yup from "yup";
 
 function ForgotPassword() {
@@ -45,7 +45,7 @@ function ForgotPassword() {
             initialValues={{ email: "" }}
             validationSchema={forgotPasswordValidationSchema}
             onSubmit={(values, { setSubmitting }) => {
-              let data: ForgotPassword = {
+              let data: forgotPassword = {
                 email: values.email,
               };
               mutate(data);
