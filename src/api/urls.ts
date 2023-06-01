@@ -7,13 +7,7 @@ const BACKEND_URLS = {
         refreshToken: '/auth/refresh/',
         me: '/auth/me/',
         resetPassword: '/auth/password-reset/',
-        confirmEmail: '/auth/email-confirmation/',
         newPassword: '/auth/user/password-change/',
-        profileImageUpload: '/auth/profile-image/upload/',
-        profileImageRemove: '/auth/profile-image/delete/',
-        updateUser: '/auth/update/user/',
-        deleteUser: '/auth/delete/user/',
-        notification: '/notification/',
     },
 };
 

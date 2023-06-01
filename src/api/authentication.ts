@@ -9,22 +9,14 @@ import { useRouter } from 'next/router';
 import { useContext } from 'react';
 import { toast } from "react-hot-toast";
 import { useSetRecoilState } from 'recoil';
+import { LoginDetails } from 'types/authentication';
 import { IError } from 'types/index';
-
-type LoginDetails = {
-    username: string;
-    password: string;
-};
 
 export const useLogin = () =>
     useMutation(
         (values: LoginDetails) => {
-            const loginDetails = new FormData();
-            loginDetails.append('username', values.username);
-            loginDetails.append('password', values.password);
-
             return instance
-                .post(BACKEND_URLS.auth.login, loginDetails)
+                .post(BACKEND_URLS.auth.login, values)
                 .then((res) => res.data)
                 .catch((err) => {
                     throw err.response.data;
@@ -32,10 +24,15 @@ export const useLogin = () =>
         },
         {
             onSuccess: (data) => {
-                Cookies.set(config.key.token, data.access_token);
-                Cookies.set(config.key.refreshToken, data.refresh_token);
+                // Cookies.set(config.key.token, data.access_token);
+                // Cookies.set(config.key.refreshToken, data.refresh_token);
+                console.log(data)
+                toast.success(data.message);
             },
-            onError: (err: IError) => err,
+            onError: (err: IError) => {
+
+                toast.error(err.message);
+            },
         },
     );
 
@@ -173,11 +170,8 @@ export const useChangePassword = () => {
                 toast.success(data.message);
             },
             onError: (err: IError) => {
-                if (typeof err?.detail === 'string') {
-                    toast.error(err?.detail);
-                    return;
-                }
-                toast.error('Failed to change password');
+
+                toast.error(err.message);
             },
         },
     );

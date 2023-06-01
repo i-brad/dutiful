@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./lib/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
@@ -13,12 +13,18 @@ module.exports = {
         space_cadet: "#1E1E4B",
         regalia: "#532F82",
         maximum_blue_purple: "#B6B6E5",
+        bright_gray: "#E7EAF1",
+        ghost_white: "#F8FAFD",
+        medium_purple: "#A16AE8",
+        crayola: "#A3B1BF",
       },
       fontSize: {
+        t14: ["0.78rem", "1.11rem"],
         t16: ["0.89rem", "1.11rem"],
         t18: ["1rem", "1.28rem"],
         t20: ["1.11rem", "1.39rem"],
         t22: ["1.22rem", "1.56rem"],
+        t36: ["2rem", "2.72rem"],
       },
       fontFamily: {
         CircularStd: ["Circular Std", "sans-serif"],
@@ -26,6 +32,9 @@ module.exports = {
       },
       fontWeight: {
         "medium-extra": 450,
+      },
+      boxShadow: {
+        "3xl": "2px 8px 8px rgba(86, 86, 86, 0.25)",
       },
     },
   },

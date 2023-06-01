@@ -1,3 +1,5 @@
+import MoreLinks from "@components/Footer/MoreLinks";
+import SocialLinks from "@components/Footer/SocialLinks";
 import Link from "next/link";
 import React from "react";
 import { AiFillApple } from "react-icons/ai";
@@ -9,42 +11,40 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 import { RiGooglePlayFill } from "react-icons/ri";
-import MoreLinks from "../Footer/MoreLinks";
-import SocialLinks from "../Footer/SocialLinks";
 import Divider from "./Divider";
 
 function Footer() {
   const socials = [
     {
       link: "https://facebook.com",
-      icon: <FaFacebookF className="text-white w-4 h-4" />,
+      icon: <FaFacebookF className="w-4 h-4 text-white" />,
     },
     {
       link: "https://instagram.com",
-      icon: <FaInstagram className="text-white w-5 h-5" />,
+      icon: <FaInstagram className="w-5 h-5 text-white" />,
     },
     {
       link: "https://twitter.com",
-      icon: <FaTwitter className="text-white w-5 h-5" />,
+      icon: <FaTwitter className="w-5 h-5 text-white" />,
     },
     {
       link: "https://youtube.com",
-      icon: <FaYoutube className="text-white w-5 h-5" />,
+      icon: <FaYoutube className="w-5 h-5 text-white" />,
     },
     {
       link: "https://linkedin.com",
-      icon: <FaLinkedin className="text-white w-5 h-5" />,
+      icon: <FaLinkedin className="w-5 h-5 text-white" />,
     },
   ];
 
   const downloadPlatform = [
     {
       link: "https://applestore.com",
-      icon: <AiFillApple className="text-white w-5 h-5" />,
+      icon: <AiFillApple className="w-5 h-5 text-white" />,
     },
     {
       link: "https://playstore.com",
-      icon: <RiGooglePlayFill className="text-white w-5 h-5" />,
+      icon: <RiGooglePlayFill className="w-5 h-5 text-white" />,
     },
   ];
   return (
@@ -65,7 +65,7 @@ function Footer() {
       </div>
       <Divider />
       <div className="flex items-center space-x-[5.67rem] mt-[0.78rem]">
-        <p className="font-medium-extra text-t18 text-white font-CircularStd">
+        <p className="text-white font-medium-extra text-t18 font-CircularStd">
           &copy; 2022 Dutiful&#174;
         </p>
         <ul className="flex items-center space-x-[1.78rem]">
