@@ -52,7 +52,7 @@ function Verify() {
   };
 
   if (!isLoggedIn && type === "email") {
-    return;
+    return <div></div>;
   }
 
   return (
@@ -104,7 +104,7 @@ function Verify() {
             <button
               className="font-medium text-accent"
               disabled={resending}
-              onClick={() => resendOtp({ email })}
+              onClick={() => resendOtp()}
             >
               Resend
             </button>
