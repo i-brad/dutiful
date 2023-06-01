@@ -1,12 +1,10 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
-
 import { configOptions, instance } from '@api/httpConfig';
 import BACKEND_URLS from '@api/urls';
 import { userState } from '@atoms/userState';
 import config from '@utils/config';
 import { useRouter } from 'next/router';
-import { useContext } from 'react';
 import { toast } from "react-hot-toast";
 import { useSetRecoilState } from 'recoil';
 import { LoginDetails } from 'types/authentication';
@@ -30,7 +28,6 @@ export const useLogin = () =>
                 toast.success(data.message);
             },
             onError: (err: IError) => {
-
                 toast.error(err.message);
             },
         },
