@@ -20,22 +20,6 @@ export const configOptions = () => {
     }
 };
 
-// persist user details
-
-export const userOptions = () => {
-    if (typeof window === 'undefined') return {};
-
-    if (!localStorage.getItem(config.key.user)) return {};
-
-    const getUser = localStorage.getItem(config.key.user) as string
-    const user = JSON.parse(getUser);
-
-    if (!!user) {
-        return {
-            ...user,
-        };
-    }
-};
 export const instance = axios.create({
     baseURL: BackendUrls.baseURl,
 });
