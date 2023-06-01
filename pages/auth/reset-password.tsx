@@ -1,4 +1,5 @@
-import { useLogin } from "@api/authentication";
+import { useResetPassword } from "@api/authentication";
+import { verifyOtpState } from "@atoms/verifyOtpState";
 import { PrimaryButton } from "@components/common/Buttons";
 import { InputField } from "@components/common/Input";
 import AppLayout from "@layouts/AppLayout";
@@ -6,36 +7,39 @@ import { Form, Formik } from "formik";
 import Link from "next/link";
 import React from "react";
 import { AiOutlineEye } from "react-icons/ai";
-import { LoginDetails } from "types/authentication";
+import { useRecoilValue } from "recoil";
+import { resetPassword } from "types/authentication";
 import * as Yup from "yup";
 
-function Login() {
-  const loginValidationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Invalid email address")
+function ResetPassword() {
+  const { email, otp } = useRecoilValue(verifyOtpState);
+  const resetPasswordValidationSchema = Yup.object().shape({
+    newPassword: Yup.string().required("Field is Required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("newPassword")], "Passwords must match")
       .required("Field is Required"),
-    password: Yup.string().required("Field is Required"),
   });
 
-  const { isLoading, mutate } = useLogin();
+  const { isLoading, mutate } = useResetPassword();
 
   return (
     <AppLayout>
       <section className="w-full pt-[4.83rem]">
         <div className="w-full max-w-[27rem] mx-auto">
-          <p className="text-t16 font-medium-slim font-CircularStd text-dim_gray">
-            Jump right back in
-          </p>
-          <h1 className="font-semibold text-t36 text-space_cadet font-Recoleta mb-[2.28rem]">
-            Login
+          <h1 className="font-semibold text-t36 text-space_cadet font-Recoleta">
+            Reset password
           </h1>
+          <p className="text-t16 font-medium-slim text-dim_gray mb-[2.28rem] mt-[0.67rem]">
+            Set your new password
+          </p>
           <Formik
-            initialValues={{ email: "", password: "" }}
-            validationSchema={loginValidationSchema}
+            initialValues={{ newPassword: "", confirmPassword: "" }}
+            validationSchema={resetPasswordValidationSchema}
             onSubmit={(values, { setSubmitting }) => {
-              let data: LoginDetails = {
-                email: values.email,
-                password: values.password,
+              let data: resetPassword = {
+                email,
+                otp,
+                password: values.newPassword,
               };
               mutate(data);
               setSubmitting(false);
@@ -44,23 +48,10 @@ function Login() {
             {() => (
               <Form>
                 <InputField
-                  name="email"
-                  type="email"
-                  placeholder="Email"
-                  classNameContainer="block mb-[1.33rem] text-t16 text-regalia font-medium"
-                  className="w-full mt-[0.44rem] font-normal border-2 rounded-md bg-ghost_white border-bright_gray"
-                  inputMode="email"
-                  inputProps={{
-                    className:
-                      "py-[0.89rem] outline-none px-[1.33rem] bg-transparent w-full",
-                  }}
-                />
-
-                <InputField
-                  name="password"
+                  name="newPassword"
                   type="password"
-                  placeholder="Password"
-                  classNameContainer="block mb-[0.53rem] text-t16 text-regalia font-medium"
+                  placeholder="Enter new password"
+                  classNameContainer="block mb-[1.33rem] text-t16 text-regalia font-medium"
                   className="w-full mt-[0.44rem] font-normal border-2 rounded-md bg-ghost_white border-bright_gray"
                   inputProps={{
                     className:
@@ -71,14 +62,25 @@ function Login() {
                     <AiOutlineEye className="w-5 h-5 cursor-pointer text-medium_purple" />
                   }
                 />
-                <Link
-                  href="/auth/forgot-password"
-                  className="text-t14 text-medium_purple font-medium-slim tracking-[-0.01rem] block mr-0 ml-auto w-fit mb-[2.44rem]"
-                >
-                  Forgot password?
-                </Link>
+
+                <InputField
+                  name="confirmPassword"
+                  type="password"
+                  placeholder="Re-enter new password"
+                  classNameContainer="block mb-[4.39rem] text-t16 text-regalia font-medium"
+                  className="w-full mt-[0.44rem] font-normal border-2 rounded-md bg-ghost_white border-bright_gray"
+                  inputProps={{
+                    className:
+                      "py-[0.89rem] outline-none px-[1.33rem] bg-transparent w-full",
+                  }}
+                  inputMode="password"
+                  endIcon={
+                    <AiOutlineEye className="w-5 h-5 cursor-pointer text-medium_purple" />
+                  }
+                />
+
                 <PrimaryButton
-                  text={isLoading ? "Logging you in" : "Log In"}
+                  text={isLoading ? "Resetting" : "Reset password"}
                   type="submit"
                   disabled={isLoading}
                   style={{
@@ -89,9 +91,9 @@ function Login() {
             )}
           </Formik>
           <span className="block mx-auto w-fit text-t16 font-medium-slim tracking-[-0.005em] text-crayola mt-[1.33rem]">
-            Don&apos;t have an account?{" "}
+            Or{" "}
             <Link href="/auth/sign-up" className="font-medium text-accent">
-              Sign Up
+              Create new account.
             </Link>
           </span>
         </div>
@@ -100,4 +102,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default ResetPassword;

@@ -5,7 +5,7 @@ import React from "react";
 function Navbar() {
   const links = ["business directory", "features", "pricing", "blog"];
   return (
-    <nav className="pl-[3.58rem] pr-[2.79rem] pt-[0.89rem] flex justify-between items-center">
+    <nav className="pl-[3.58rem] pr-[2.79rem] sticky top-0 bg-white z-10 pt-[0.89rem] flex justify-between items-center">
       <Link href="/">
         <Image
           src="/dutiful.svg"
@@ -20,8 +20,8 @@ function Navbar() {
           {links.map((link) => (
             <li key={link}>
               <Link
-                className="text-t18 font-medium-extra text-dim_gray font-CircularStd"
-                href={link.replace(/" "/g, "-")}
+                className="text-t18 font-medium-slim text-dim_gray font-CircularStd"
+                href={link.replace(/ /g, "-")}
               >
                 {link}
               </Link>
@@ -37,7 +37,7 @@ function Navbar() {
           </Link>
           <Link
             href="/auth/signup"
-            className="text-primary border-2 rounded-md py-[0.90rem] px-[2.89rem] border-primary font-CircularStd font-medium text-t20"
+            className="text-accent border-2 rounded-md py-[0.90rem] px-[2.89rem] border-accent font-CircularStd font-medium text-t20"
           >
             Sign up
           </Link>

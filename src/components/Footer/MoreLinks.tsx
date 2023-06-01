@@ -18,7 +18,7 @@ const MoreLinks = ({ heading, links }: MoreLinksProps) => {
             className="block mb-[0.61rem] last-of-type:mb-0 first-letter:capitalize"
           >
             <Link
-              className="text-t16 font-medium-extra text-maximum_blue_purple font-CircularStd"
+              className="text-t16 font-medium-slim text-maximum_blue_purple font-CircularStd"
               href={link.replace(/" "/g, "-").replace(/&/g, "")}
             >
               {link === "faqs" ? "FAQs" : link}

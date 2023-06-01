@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#603F8B",
+        accent: "#603F8B",
         dim_gray: "#686868",
         space_cadet: "#1E1E4B",
         regalia: "#532F82",
@@ -17,6 +17,12 @@ module.exports = {
         ghost_white: "#F8FAFD",
         medium_purple: "#A16AE8",
         crayola: "#A3B1BF",
+        platinum: "#E5E7EA",
+        charcoal: "#353F54",
+        dark_purple: "#230B34",
+        alice_blue: "#EEEEFF",
+        pastel_blue: "#B1BDCA",
+        magnolia: "#F8F3FF",
       },
       fontSize: {
         t14: ["0.78rem", "1.11rem"],
@@ -31,7 +37,7 @@ module.exports = {
         Recoleta: ["Recoleta", "sans-serif"],
       },
       fontWeight: {
-        "medium-extra": 450,
+        "medium-slim": 450,
       },
       boxShadow: {
         "3xl": "2px 8px 8px rgba(86, 86, 86, 0.25)",

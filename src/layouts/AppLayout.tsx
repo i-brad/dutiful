@@ -6,14 +6,14 @@ interface Props {
   children: JSX.Element | JSX.Element[];
 }
 
-function AuthLayout({ children }: Props) {
+function AppLayout({ children }: Props) {
   return (
     <div className="w-screen max-w-full min-h-screen bg-white">
       <Navbar />
-      <main className="min-h-screen">{children}</main>
+      <main className="min-h-screen mb-[4.56rem]">{children}</main>
       <Footer />
     </div>
   );
 }
 
-export default AuthLayout;
+export default AppLayout;
