@@ -1,9 +1,15 @@
+import { useLogout } from "@api/authentication";
+import { AuthState } from "@atoms/authenticationState";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { BiLoaderAlt } from "react-icons/bi";
+import { useRecoilValue } from "recoil";
 
 function Navbar() {
+  const { isLoggedIn } = useRecoilValue(AuthState);
   const links = ["business directory", "features", "pricing", "blog"];
+  const { isLoading, mutate } = useLogout();
   return (
     <nav className="pl-[3.58rem] pr-[2.79rem] sticky top-0 bg-white z-10 pt-[0.89rem] flex justify-between items-center">
       <Link href="/">
@@ -28,20 +34,35 @@ function Navbar() {
             </li>
           ))}
         </ul>
-        <span className="flex items-center justify-between space-x-[3rem]">
-          <Link
-            href="/auth/login"
-            className="text-space_cadet font-CircularStd font-medium text-t20"
+        {isLoggedIn ? (
+          <button
+            className="text-accent border-2 min-w-[9.67rem] grid place-items-center rounded-md py-[0.90rem] px-[2.89rem] border-accent font-CircularStd font-medium text-t20"
+            type="button"
+            disabled={isLoading}
+            onClick={() => mutate()}
           >
-            Login
-          </Link>
-          <Link
-            href="/auth/signup"
-            className="text-accent border-2 rounded-md py-[0.90rem] px-[2.89rem] border-accent font-CircularStd font-medium text-t20"
-          >
-            Sign up
-          </Link>
-        </span>
+            {isLoading ? (
+              <BiLoaderAlt className="animate-spin w-5 h-5" />
+            ) : (
+              "Log out"
+            )}
+          </button>
+        ) : (
+          <span className="flex items-center justify-between space-x-[3rem]">
+            <Link
+              href="/auth/login"
+              className="text-space_cadet font-CircularStd font-medium text-t20"
+            >
+              Login
+            </Link>
+            <Link
+              href="/auth/signup"
+              className="text-accent border-2 rounded-md py-[0.90rem] px-[2.89rem] border-accent font-CircularStd font-medium text-t20"
+            >
+              Sign up
+            </Link>
+          </span>
+        )}
       </div>
     </nav>
   );

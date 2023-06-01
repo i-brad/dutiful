@@ -8,7 +8,7 @@ import config from '@utils/config';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { toast } from "react-hot-toast";
-import { useSetRecoilState } from 'recoil';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { LoginDetails, SignupDetails, forgotPassword, resetPassword } from 'types/authentication';
 import { IError } from 'types/index';
 
@@ -29,15 +29,16 @@ export const useLogin = () => {
         {
             onSuccess: (data) => {
                 // console.log(data)
-                Cookies.set(config.key.token, data.data.token);
+                Cookies.set(config.key.token, data.data.token, { expires: 2 });
                 setUser(data.user)
                 toast.success(data.message);
-                setAuth({ isLoggedIn: true })
 
                 if (data.data.user.email_verified) {
+                    setAuth({ isLoggedIn: true, emailVerified: true })
                     router.push("/")
                     return
                 }
+                setAuth({ isLoggedIn: true })
                 setVerifyOtpState({ type: "email", email: data.data.user.email })
                 toast.success("Verify your email");
                 router.push("/auth/verify")
@@ -82,13 +83,10 @@ export const useSignup = () => {
     });
 };
 
-type ResendOtp = {
-    email: string;
-};
 export const useResendOtp = () => {
-    return useMutation((values: ResendOtp) => {
+    return useMutation(() => {
         return instance
-            .post(BACKEND_URLS.auth.resendOtp, values, configOptions())
+            .post(BACKEND_URLS.auth.resendOtp, null, configOptions())
             .then((res) => res.data)
             .catch((err) => {
                 throw err.response.data;
@@ -119,6 +117,7 @@ type emailVerifyOtp = {
     otp: string;
 };
 export const useEmailVerify = () => {
+    const setAuth = useSetRecoilState(AuthState)
     return useMutation((values: emailVerifyOtp) => {
         return instance
             .post(BACKEND_URLS.auth.verifyEmail, values, configOptions())
@@ -129,7 +128,9 @@ export const useEmailVerify = () => {
     },
         {
             onSuccess: (data) => {
+                // console.log(data);
                 toast.success(data.message);
+                setAuth({ isLoggedIn: true, emailVerified: true })
             },
             onError: (err: IError) => {
                 // console.log(err)
@@ -211,7 +212,6 @@ export const useResetPassword = () => {
 
 // useForgotPassword
 export const useForgotPassword = () => {
-
     return useMutation((values: forgotPassword) => {
         return instance
             .post(BACKEND_URLS.auth.forgotPassword, values)
@@ -233,16 +233,15 @@ export const useForgotPassword = () => {
 };
 
 export const useGetUser = () => {
-    const router = useRouter();
+    const token = Cookies.get(config.key.token);
     const setUser = useSetRecoilState(userState);
+    const setAuth = useSetRecoilState(AuthState)
     return useQuery(
         ['getUser'],
         () =>
             instance
                 .get(BACKEND_URLS.auth.me, configOptions())
                 .then((res) => {
-                    console.log(res.data, 'testing');
-                    setUser(res.data);
                     return res.data;
                 })
                 .catch((err) => {
@@ -250,17 +249,52 @@ export const useGetUser = () => {
                 }),
         {
             retry: false,
+            enabled: token ? true : false,
             onSuccess: (data) => {
-                if (data) {
-                    localStorage.setItem(config.key.user, JSON.stringify(data));
-                    setUser(data);
+                // console.log(data)
+                if (data.data.email_verified) {
+                    setUser(data.data);
+                    setAuth({ isLoggedIn: true, emailVerified: true })
                 }
             },
-            onError: (err: { status: number }) => {
-                if (err?.status >= 500) {
-                    router.push('/500');
-                }
+            onError: (err: IError) => {
+                console.log(err)
             },
         },
     );
+};
+
+export const useLogout = () => {
+    const resetUser = useResetRecoilState(userState);
+    const resetAuth = useResetRecoilState(AuthState)
+    return useMutation(() => {
+        return instance
+            .post(BACKEND_URLS.auth.logout, null, configOptions())
+            .then((res) => res.data)
+            .catch((err) => {
+                throw err.response.data;
+            });
+    },
+        {
+            onSuccess: (data) => {
+                toast.success(data.message);
+                Cookies.remove(config.key.token);
+                resetUser()
+                resetAuth()
+            },
+            onError: (err: IError) => {
+                // console.log(err)
+                if (err.error) {
+                    toast.error(err.error);
+                    return;
+                }
+                if (err.errors) {
+                    Object.entries(err.errors).map(([key, value]) => {
+                        toast.error(value[0]);
+                    })
+                    return
+                }
+                toast.error(err.message);
+            },
+        });
 };

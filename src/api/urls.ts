@@ -3,6 +3,7 @@ const BACKEND_URLS = {
     auth: {
         register: '/auth/register/',
         login: '/auth/login/',
+        logout: "auth/logout/",
         resendOtp: '/auth/email/resend/',
         me: '/auth/user/',
         forgotPassword: "/auth/password/email/",
