@@ -10,8 +10,8 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { BsCheckLg } from "react-icons/bs";
+import { signupValidationSchema } from "src/schemas/authentication";
 import { SignupDetails } from "types/authentication";
-import * as Yup from "yup";
 
 interface UserTypeProps {
   type: string;
@@ -41,26 +41,9 @@ const UserType = ({ type, icon, selected, onClick }: UserTypeProps) => {
   );
 };
 
-const phoneNumberRegex =
-  /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
-
 function SignUp() {
   const [checked, setChecked] = useState(false);
   const [userType, setUserType] = useState("Regular user");
-
-  const loginValidationSchema = Yup.object().shape({
-    fullname: Yup.string().required("Field is Required"),
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("Field is Required"),
-    phone: Yup.string()
-      .matches(phoneNumberRegex, "Invalid Phone number")
-      .required("Field is Required"),
-    password: Yup.string().required("Field is Required"),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password")], "Passwords must match")
-      .required("Field is Required"),
-  });
 
   const { isLoading, mutate, isSuccess } = useSignup();
 
@@ -111,7 +94,7 @@ function SignUp() {
                 phone: "",
                 password: "",
               }}
-              validationSchema={loginValidationSchema}
+              validationSchema={signupValidationSchema}
               onSubmit={(values, { setSubmitting }) => {
                 let data: SignupDetails = {
                   user: userType,

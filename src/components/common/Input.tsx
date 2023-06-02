@@ -3,19 +3,7 @@ import React, { useState } from "react";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { BsCheckSquareFill } from "react-icons/bs";
 import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
-
-interface InputFieldProps {
-  name: string;
-  placeholder: string;
-  type: string;
-  className: string;
-  classNameContainer: string;
-  inputMode?: string;
-  endIcon?: JSX.Element;
-  inputProps?: {
-    className?: string;
-  };
-}
+import { InputFieldProps } from "types/inputField";
 
 export function InputField({
   name,

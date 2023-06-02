@@ -8,18 +8,11 @@ import Link from "next/link";
 import React from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { useRecoilValue } from "recoil";
+import { resetPasswordValidationSchema } from "src/schemas/authentication";
 import { resetPassword } from "types/authentication";
-import * as Yup from "yup";
 
 function ResetPassword() {
   const { email, otp } = useRecoilValue(verifyOtpState);
-  const resetPasswordValidationSchema = Yup.object().shape({
-    newPassword: Yup.string().required("Field is Required"),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref("newPassword")], "Passwords must match")
-      .required("Field is Required"),
-  });
-
   const { isLoading, mutate } = useResetPassword();
 
   return (
