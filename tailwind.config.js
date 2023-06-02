@@ -34,7 +34,9 @@ module.exports = {
         t20: ["1.11rem", "1.39rem"],
         t22: ["1.22rem", "1.56rem"],
         t24: ["1.33rem", "1.67rem"],
+        t32: ["1.78rem", "2.56rem"],
         t36: ["2rem", "2.72rem"],
+        t48: ["2.67rem", "3.83rem"],
       },
       fontFamily: {
         CircularStd: ["Circular Std", "sans-serif"],

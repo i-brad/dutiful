@@ -52,7 +52,7 @@ function SignUp() {
   };
   return (
     <AppLayout>
-      <section className="w-full pt-[4.83rem]">
+      <section className="w-full pt-[4.83rem] mb-[4.56rem]">
         {isSuccess ? (
           <Successful />
         ) : (

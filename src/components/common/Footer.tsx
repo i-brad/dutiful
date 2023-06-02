@@ -73,7 +73,7 @@ function Footer() {
             <li key={link} className="first-letter:capitalize">
               <Link
                 className="text-t16 font-medium-slim text-maximum_blue_purple font-CircularStd"
-                href={link.replace(" ", "-")}
+                href={`/${link.replace(/ /g, "-")}`}
               >
                 {link}
               </Link>

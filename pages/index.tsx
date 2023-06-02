@@ -11,7 +11,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <AppLayout>
-      <div className="px-[3.58rem]">
+      <div className="px-[3.58rem] mb-[7.94rem]">
         <section className="flex items-start justify-between mt-[0.83rem] pt-[3.11rem] pb-[0.83rem] h-fit">
           <div className="w-full pt-[8.5rem]">
             <h1 className="text-t36 font-Recoleta font-semibold text-dark_purple max-w-[26.17rem]">
