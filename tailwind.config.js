@@ -36,7 +36,7 @@ module.exports = {
       },
       fontFamily: {
         CircularStd: ["Circular Std", "sans-serif"],
-        Recoleta: ["Recoleta", "sans-serif"],
+        Recoleta: ["Recoleta Alt", "sans-serif"],
       },
       fontWeight: {
         "medium-slim": 450,

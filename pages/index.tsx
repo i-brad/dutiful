@@ -50,7 +50,7 @@ export default function Home() {
             <Image src={Group4} alt="businesses" />
           </div>
           <div className="w-full pt-[2.5rem]">
-            <h2 className="text-t36 font-Recoleta font-semibold text-space_cadet max-w-[26.78rem] mb-[0.22rem]">
+            <h2 className="text-t36 font-Recoleta font-semibold text-space_cadet mb-[0.22rem]">
               Accept and sell appointments
             </h2>
             <p className="text-t20 font-medium-slim text-dim_gray max-w-[30.94rem]">
