@@ -3,7 +3,7 @@ export interface InputFieldProps {
     placeholder?: string;
     label?: string;
     type?: string;
-    className: string;
+    className?: string;
     classNameContainer: string;
     inputMode?: string;
     endIcon?: JSX.Element;

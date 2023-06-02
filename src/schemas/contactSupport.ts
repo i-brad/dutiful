@@ -6,5 +6,6 @@ export const supportValidationSchema = Yup.object().shape({
         .email("Invalid email address")
         .required("Field is Required"),
     businessType: Yup.string(),
+    subject: Yup.string().required("Field is Required"),
     message: Yup.string().required("Field is Required"),
 });
