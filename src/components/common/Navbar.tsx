@@ -1,7 +1,9 @@
 import { useLogout } from "@api/authentication";
+import SearchIcon from "@assets/icons/Search";
 import { AuthState } from "@atoms/authenticationState";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 import { useRecoilValue } from "recoil";
@@ -10,6 +12,7 @@ function Navbar() {
   const { isLoggedIn } = useRecoilValue(AuthState);
   const links = ["business directory", "features", "pricing", "blog"];
   const { isLoading, mutate } = useLogout();
+  const router = useRouter();
   return (
     <nav className="pl-[3.58rem] pr-[2.79rem] pb-2 sticky top-0 bg-white z-10 pt-[0.89rem] flex justify-between items-center">
       <Link href="/">
@@ -23,6 +26,11 @@ function Navbar() {
       </Link>
       <div className="flex items-center justify-between space-x-[5.15rem]">
         <ul className="flex items-center space-x-[2.78rem] capitalize">
+          {!router.pathname.includes("auth") && (
+            <li className="mr-[0.56rem]">
+              <SearchIcon />
+            </li>
+          )}
           {links.map((link) => (
             <li key={link}>
               <Link
@@ -56,7 +64,7 @@ function Navbar() {
               Login
             </Link>
             <Link
-              href="/auth/signup"
+              href="/auth/sign-up"
               className="text-accent border-2 rounded-md py-[0.85rem] px-[2.5rem] border-accent font-CircularStd font-medium text-t20"
             >
               Sign up
