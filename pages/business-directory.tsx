@@ -1,3 +1,4 @@
+import { useContactSupport } from "@api/index";
 import Group5 from "@assets/Group5.svg";
 import CallingIcon from "@assets/icons/Calling";
 import MapIcon from "@assets/icons/Map";
@@ -9,8 +10,9 @@ import TextField from "@components/common/TextField";
 import AppLayout from "@layouts/AppLayout";
 import { Form, Formik } from "formik";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { supportValidationSchema } from "src/schemas/contactSupport";
+import { ContactSupportProps } from "types/index";
 
 interface InfoProps {
   title: string;
@@ -68,6 +70,8 @@ function BusinessDirectory() {
     },
   ];
 
+  const [callback, setCallback] = useState<any>(null);
+  const { isLoading, mutate } = useContactSupport(callback);
   return (
     <AppLayout>
       <section className="w-full relative mt-[0.83rem] h-fit">
@@ -95,18 +99,23 @@ function BusinessDirectory() {
             email: "",
             businessType: "",
             subject: "",
+            message: "",
           }}
           validationSchema={supportValidationSchema}
-          onSubmit={(values, { setSubmitting }) => {
-            let data = {
+          onSubmit={(values, { setSubmitting, resetForm }) => {
+            let data: ContactSupportProps = {
               name: values.fullname,
               email: values.email,
+              subject: values.subject,
+              business_type: values.businessType,
+              message: values.message,
             };
-
+            setCallback(resetForm);
+            mutate(data);
             setSubmitting(false);
           }}
         >
-          {() => (
+          {({ setFieldValue }) => (
             <Form>
               <InputField
                 name="fullname"
@@ -146,11 +155,13 @@ function BusinessDirectory() {
                 name="subject"
                 label="Subject"
                 classNameContainer="block mb-[1.78rem] text-t16 text-regalia font-medium"
-                option={["me"]}
+                className="mt-[0.44rem]"
+                options={["Bug", "Service report", "Account issues", "Others"]}
                 inputProps={{
                   className:
-                    "py-[0.89rem] outline-none px-[1.33rem] w-full mt-[0.44rem] font-normal border-2 rounded-md bg-ghost_white border-bright_gray",
+                    "py-[0.89rem] outline-none px-[1.33rem] w-full font-normal border-2 rounded-md bg-ghost_white border-bright_gray",
                 }}
+                onChange={(value) => setFieldValue("subject", value)}
               />
               <TextField
                 name="message"
@@ -162,10 +173,11 @@ function BusinessDirectory() {
                 }}
               />
               <PrimaryButton
-                text={"Send message"}
+                text={isLoading ? "Sending" : "Send message"}
                 type="submit"
+                disabled={isLoading}
                 style={{
-                  opacity: "1",
+                  opacity: isLoading ? "0.5" : "1",
                 }}
               />
             </Form>
