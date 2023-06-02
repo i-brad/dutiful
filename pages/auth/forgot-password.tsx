@@ -31,7 +31,7 @@ function ForgotPassword() {
   };
   return (
     <AppLayout>
-      <section className="w-full pt-[4.83rem]">
+      <section className="w-full pt-[4.83rem] mb-[6.44rem]">
         {isSuccess ? (
           <Successful />
         ) : (

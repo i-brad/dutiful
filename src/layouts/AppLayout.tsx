@@ -29,7 +29,7 @@ function AppLayout({ children }: Props) {
   return (
     <div className="w-screen max-w-full min-h-screen bg-white">
       <Navbar />
-      <main className="min-h-screen">{children}</main>
+      <main className="min-h-fit">{children}</main>
       <Footer />
     </div>
   );

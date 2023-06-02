@@ -17,7 +17,7 @@ function ResetPassword() {
 
   return (
     <AppLayout>
-      <section className="w-full pt-[4.83rem]">
+      <section className="w-full pt-[4.83rem] mb-[6.50rem]">
         <div className="w-full max-w-[27rem] mx-auto">
           <h1 className="font-semibold text-t36 text-space_cadet font-Recoleta">
             Reset password

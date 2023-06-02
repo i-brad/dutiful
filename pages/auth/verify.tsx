@@ -69,7 +69,7 @@ function Verify() {
 
   return (
     <AppLayout>
-      <section className="w-full pt-[4.83rem]">
+      <section className="w-full pt-[4.83rem] mb-[8.44rem]">
         <div className="w-full max-w-[27rem] mx-auto grid place-items-center pt-[3.39rem]">
           <OtpInput
             value={otp}
