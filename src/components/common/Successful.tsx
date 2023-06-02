@@ -13,7 +13,7 @@ function Successful() {
     router.push("/auth/verify");
   };
   return (
-    <div className="w-full max-w-[27rem] mx-auto grid place-items-center pt-[3.39rem]">
+    <div className="w-full max-w-[27rem] mx-auto grid place-items-center pt-[3.39rem] mb-[10.89rem]">
       <span className="w-[8rem] h-[8rem] rounded-full bg-magnolia mb-[0.89rem] grid place-items-center">
         <span className="block relative">
           <SuccessIcon />

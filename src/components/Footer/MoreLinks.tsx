@@ -19,7 +19,7 @@ const MoreLinks = ({ heading, links }: MoreLinksProps) => {
           >
             <Link
               className="text-t16 font-medium-slim text-maximum_blue_purple font-CircularStd"
-              href={`/${link.replace(/" "/g, "-").replace(/&/g, "")}`}
+              href={`/${link.replace(/ /g, "-").replace(/&/g, "")}`}
             >
               {link === "faqs" ? "FAQs" : link}
             </Link>
