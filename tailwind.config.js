@@ -25,6 +25,7 @@ module.exports = {
         magnolia: "#F8F3FF",
         onyx: "#383838",
         baby_powder: "#FCFAFF",
+        granite_gray: "#656565",
       },
       fontSize: {
         t14: ["0.78rem", "1.11rem"],
@@ -32,6 +33,7 @@ module.exports = {
         t18: ["1rem", "1.28rem"],
         t20: ["1.11rem", "1.39rem"],
         t22: ["1.22rem", "1.56rem"],
+        t24: ["1.33rem", "1.67rem"],
         t36: ["2rem", "2.72rem"],
       },
       fontFamily: {

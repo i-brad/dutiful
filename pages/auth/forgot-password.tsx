@@ -11,19 +11,13 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import { useSetRecoilState } from "recoil";
+import { forgotPasswordValidationSchema } from "src/schemas/authentication";
 import { forgotPassword } from "types/authentication";
-import * as Yup from "yup";
 
 function ForgotPassword() {
   const [userEmail, setUserEmail] = useState("");
   const router = useRouter();
   const setVerifyOtpState = useSetRecoilState(verifyOtpState);
-
-  const forgotPasswordValidationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("Field is Required"),
-  });
 
   const { isLoading, mutate, isSuccess } = useForgotPassword();
 

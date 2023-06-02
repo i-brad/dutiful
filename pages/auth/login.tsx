@@ -6,17 +6,10 @@ import { Form, Formik } from "formik";
 import Link from "next/link";
 import React from "react";
 import { AiOutlineEye } from "react-icons/ai";
+import { loginValidationSchema } from "src/schemas/authentication";
 import { LoginDetails } from "types/authentication";
-import * as Yup from "yup";
 
 function Login() {
-  const loginValidationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("Field is Required"),
-    password: Yup.string().required("Field is Required"),
-  });
-
   const { isLoading, mutate } = useLogin();
 
   return (

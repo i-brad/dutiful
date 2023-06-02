@@ -9,7 +9,8 @@ const BACKEND_URLS = {
         forgotPassword: "/auth/password/email/",
         resetPassword: '/auth/password/reset/',
         verifyEmail: "/auth/email/verify/",
-        verifyPasswordResetOtp: "/auth/password/verify/"
+        verifyPasswordResetOtp: "/auth/password/verify/",
+        support: "/contact"
     },
 };
 
