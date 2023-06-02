@@ -1,5 +1,6 @@
 import {
   useEmailVerify,
+  useForgotPassword,
   usePasswordResetVerifyOtp,
   useResendOtp,
 } from "@api/authentication";
@@ -28,6 +29,9 @@ function Verify() {
   }, [email, isLoggedIn, router, type]);
 
   const { isLoading: resending, mutate: resendOtp } = useResendOtp();
+  //otp resend for password reset
+  const { isLoading: resendingOtp, mutate: resendResetOtp } =
+    useForgotPassword();
   const { isLoading, mutate: verify } = useEmailVerify();
   const {
     isLoading: resetVerifying,
@@ -42,6 +46,14 @@ function Verify() {
       return;
     }
   }, [email, isSuccess, router, type, setVerifyOtpState, otp]);
+
+  const otpResendHandler = () => {
+    if (type === "password") {
+      resendResetOtp({ email });
+      return;
+    }
+    resendOtp();
+  };
 
   const handleVerification = () => {
     if (type === "password") {
@@ -90,10 +102,20 @@ function Verify() {
           <PrimaryButton
             text={isLoading ? "Verifying" : "Confirm OTP"}
             type="button"
-            disabled={otp.length < 6 || isLoading || resetVerifying}
+            disabled={
+              otp.length < 6 ||
+              isLoading ||
+              resetVerifying ||
+              resendingOtp ||
+              resending
+            }
             style={{
               opacity:
-                otp.length < 6 || resending || isLoading || resetVerifying
+                otp.length < 6 ||
+                resending ||
+                isLoading ||
+                resetVerifying ||
+                resendingOtp
                   ? "0.5"
                   : "1",
             }}
@@ -103,8 +125,8 @@ function Verify() {
             Didn&apos;t get a code?{" "}
             <button
               className="font-medium text-accent"
-              disabled={resending}
-              onClick={() => resendOtp()}
+              disabled={resending || resendingOtp}
+              onClick={otpResendHandler}
             >
               Resend
             </button>

@@ -1,9 +1,19 @@
 @import url("https://fonts.cdnfonts.com/css/circular-std");
-@import url("https://fonts.cdnfonts.com/css/recoleta");
+/* @import url("https://fonts.cdnfonts.com/css/recoleta"); */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "Recoleta Alt";
+  src: url("../public/fonts/RecoletaAlt-SemiBold.ttf");
+}
+
+/* @font-face {
+  font-family: "Circular Std";
+  src: url("../public/fonts/circular-std-medium-500.ttf");
+} */
 
 * {
   font-family: "Circular Std", sans-serif;
