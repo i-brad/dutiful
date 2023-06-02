@@ -92,7 +92,7 @@ function BusinessDirectory() {
           ))}
         </div>
       </section>
-      <section className="w-full max-w-[33.33rem] mx-auto mt-[10.06rem]">
+      <section className="w-full max-w-[33.33rem] mx-auto mt-[10.06rem] mb-[3.33rem]">
         <Formik
           initialValues={{
             fullname: "",

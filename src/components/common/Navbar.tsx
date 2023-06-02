@@ -27,7 +27,7 @@ function Navbar() {
             <li key={link}>
               <Link
                 className="text-t18 font-medium-slim text-dim_gray font-CircularStd"
-                href={link.replace(/ /g, "-")}
+                href={`/${link.replace(/ /g, "-")}`}
               >
                 {link}
               </Link>
